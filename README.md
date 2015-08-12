@@ -20,8 +20,8 @@ The steps for programming the robot are :
 
 Then you should be able to telnet the robot (no easy way to find the IP yet , use nmap ...) , for now there are a few simple commands (all the angles are in degrees) :
 
-  * H<angle> : change the main heading of the robot
-  * A<angle> : set the angle when the robot is moving
-  * S<speed> : set the speed of the robot (0 to about 60)
+  * H< angle> : change the main heading of the robot
+  * A< angle> : set the angle when the robot is moving
+  * S< speed> : set the speed of the robot (0 to about 60)
   * B : get the battery status (0% to 100%)
   * E<1 to 3> : get the the distance to the next obstacle for the given sonar (in cm)
