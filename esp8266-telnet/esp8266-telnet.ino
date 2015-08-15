@@ -30,26 +30,29 @@ WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 
 void setup() {
-
+  
   Serial.begin(9600);
- 
+  
+  delay(8000);
+  
   WiFi.begin(ssid, password);
-  Serial.print("\nConnecting to "); Serial.println(ssid);
+  
+  Serial.print("m");
+  Serial.println(ssid);
+  
   uint8_t i = 0;
   while (WiFi.status() != WL_CONNECTED && i++ < 20) delay(500);
   if(i == 21){
-   Serial.print("Could not connect to"); Serial1.println(ssid);
+    Serial.println("mNo WIFI connect");
     while(1) delay(500);
   }
-  //start UART and the server
-  //Serial.begin(9600);
+  
   server.begin();
   server.setNoDelay(true);
-
   
-  Serial.print("Ready! Use 'telnet ");
-  Serial.print(WiFi.localIP());
-  Serial.println(" 23' to connect");
+  Serial.print("m");
+  Serial.println(WiFi.localIP());
+
 }
 
 void loop() {

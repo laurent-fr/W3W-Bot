@@ -22,7 +22,7 @@ IMU::IMU() { }
  
 void IMU::initialize() {  
   // gyro
-  _gyro = ITG3200();
+ _gyro = ITG3200();
   _gyro.init(ITG3200_ADDR_AD0_LOW);
   _gyro.zeroCalibrate(2500, 2);
 

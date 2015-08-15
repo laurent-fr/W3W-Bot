@@ -34,6 +34,7 @@
 
 #define BATTERY_FULL 8.4
 #define BATTERY_EMPTY 6.4
+#define BATTERY_BUFFER_SIZE 4
 
 // motors
 #define MOTOR_COUNT 3

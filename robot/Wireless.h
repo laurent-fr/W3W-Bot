@@ -25,6 +25,7 @@
 
 #define WIRELESS_MODE_CMD 1
 #define WIRELESS_MODE_PARAM 2
+#define WIRELESS_MODE_TEXT 3
 
 class Wireless {
 
@@ -33,6 +34,8 @@ class Wireless {
     int16_t _param;
     int8_t _sign;
     uint8_t _mode;
+    char _text[16];
+    uint8_t _text_pos;
     
   public:
 
@@ -40,6 +43,7 @@ class Wireless {
     void begin();
     char getCommand();
     int16_t getParam();
+    char *getText();
     void send(int);
 
   

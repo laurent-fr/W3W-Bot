@@ -49,12 +49,24 @@ void Wheel::setHeading(float heading) {
   }
 }
 
+float Wheel::getHeading() {
+  return _heading;
+}
+
+float Wheel::getGyroHeading() {
+  return _gyro_heading;
+}
+
 void Wheel::setAngle(float angle) {
   _angle=angle;
   if (_angle!=_old_angle) {
     _old_angle=_angle;
     calcMotors();
   }
+}
+
+float Wheel::getAngle() {
+  return _angle;
 }
 
 void Wheel::setSpeed(float speed) {
@@ -65,9 +77,15 @@ void Wheel::setSpeed(float speed) {
   }
 }
 
+float Wheel::getSpeed() {
+  return _speed;
+}
+
 void Wheel::updateHeading() {
   _delta_t=micros()-_delta_t1;
   _delta_t1=micros();
+
+  Serial.println(_delta_t);
 
   _compass_heading = normalizeAngle( _imu->getCompassHeading() );
   
@@ -86,9 +104,6 @@ void Wheel::setMotorSpeed(uint8_t motor,int16_t speed) {
 
   uint8_t m=motor-1;
 
-   //Serial.println(dirs[m]);
-  //Serial.println(pwms[m]);
-  
   if (speed>255) speed=255;
   if (speed<-255) speed=-255;
 

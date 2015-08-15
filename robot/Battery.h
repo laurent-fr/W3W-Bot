@@ -26,6 +26,10 @@
 
 class Battery {
 
+  private:
+    uint8_t _buffer[BATTERY_BUFFER_SIZE];
+    uint8_t _buffer_pos;
+
   public:
 
     Battery();

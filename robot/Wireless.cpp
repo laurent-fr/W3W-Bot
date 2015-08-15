@@ -28,6 +28,7 @@ Wireless::Wireless() {
   _cmd=0;
   _param=0;
   _sign=1;
+  _text_pos=0;
 }
 
 
@@ -50,6 +51,7 @@ char Wireless::getCommand() {
   if (c=='\r') return 0;
 
   if (c=='\n') { 
+    if (_mode==WIRELESS_MODE_TEXT) _text[_text_pos]='\0';
     _mode=WIRELESS_MODE_CMD; 
     return _cmd; 
   }
@@ -58,7 +60,8 @@ char Wireless::getCommand() {
     _cmd = c;
     _param = 0;
     _sign=1;
-    _mode = WIRELESS_MODE_PARAM;
+    _text_pos=0;
+    if (c>='a') { _mode = WIRELESS_MODE_TEXT; } else { _mode = WIRELESS_MODE_PARAM; }
     return 0;
   }
 
@@ -76,12 +79,23 @@ char Wireless::getCommand() {
     } 
 
     _param = (int16_t)(c-'0')+(_param*10);
+    return 0;
+  }
+
+  if (_mode == WIRELESS_MODE_TEXT) {
+    _text[_text_pos++]=c;
+    if (_text_pos>=15) _text_pos=15;
+    return 0;    
   }
     
 }
 
 int16_t Wireless::getParam() {
   return _param*_sign;
+}
+
+char *Wireless::getText() {
+  return _text;
 }
 
 void Wireless::send(int value) {

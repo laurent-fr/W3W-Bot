@@ -5,8 +5,7 @@ A 3-wheeled robot with Wifi interface with a Arduino and a ESP8266. The hardware
 To build the arduino firmware, you will need a few libraries :
 
  * https://github.com/irvined1982/itg3200
- * https://github.com/adafruit/Adafruit-GFX-Library
- * https://github.com/adafruit/Adafruit_SSD1306
+ * https://code.google.com/p/u8glib/
  * https://github.com/adafruit/Adafruit_HMC5883_Unified
  * https://github.com/adafruit/Adafruit_Sensor
  
@@ -18,10 +17,11 @@ The steps for programming the robot are :
 
  When powered on, the robot should turn to magnetic north after a few seconds, and stay in this position (try to rotate the robot by hand).
 
-Then you should be able to telnet the robot (no easy way to find the IP yet , use nmap ...) , for now there are a few simple commands (all the angles are in degrees) :
+Then you should be able to telnet the robot (the IP address is displayed on the first line of the screen) , for now there are a few simple commands (all the angles are in degrees) :
 
   * H< angle> : change the main heading of the robot
   * A< angle> : set the angle when the robot is moving
   * S< speed> : set the speed of the robot (0 to about 60)
   * B : get the battery status (0% to 100%)
   * E<1 to 3> : get the the distance to the next obstacle for the given sonar (in cm)
+  * m<text up to 16 chars> : display a text in the first line of the display

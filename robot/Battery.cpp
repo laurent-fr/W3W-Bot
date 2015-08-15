@@ -22,12 +22,19 @@ Battery::Battery() {
 }
 
 float Battery::voltage() {
-  return (float)analogRead(A0)/102.4;
+  _buffer[_buffer_pos++]=analogRead(A0)/4;
+  if (_buffer_pos>=BATTERY_BUFFER_SIZE) _buffer_pos=0;
+
+  float volt=0;
+  for(int i=0;i<BATTERY_BUFFER_SIZE;i++) volt+=_buffer[i];
+
+  return volt/12.8;
+  
 }
 
 uint8_t Battery::percent() {
   
-  int percent=(((float)analogRead(PIN_BATTERY)/102.4)-BATTERY_EMPTY)*100./(BATTERY_FULL-BATTERY_EMPTY) ;
+  int percent=(voltage()-BATTERY_EMPTY)*100./(BATTERY_FULL-BATTERY_EMPTY) ;
   if (percent>100) return 100;
   if (percent<0) return 0;
   return percent;
