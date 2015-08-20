@@ -34,7 +34,6 @@ class Wheel {
 
     float _speed1,_speed2,_speed3;
 
-    uint16_t _delta_t, _delta_t1;
     float _compass_heading,_gyro_heading;
 
     void setMotorSpeed(uint8_t motor,int16_t speed);
@@ -60,7 +59,7 @@ class Wheel {
     float getAngle();
     float getSpeed();
 
-    void updateHeading();
+    void updateHeading(uint16_t delta_t);
     void updateMotors();
 };
 

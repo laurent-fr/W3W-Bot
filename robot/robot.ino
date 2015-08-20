@@ -19,13 +19,17 @@
 #include <Wire.h>
 
 // compass
+// https://github.com/adafruit/Adafruit_Sensor
 #include <Adafruit_Sensor.h>
+// https://github.com/adafruit/Adafruit_HMC5883_Unified
 #include <Adafruit_HMC5883_U.h>
 
 // gyro
+// https://github.com/irvined1982/itg3200
 #include <ITG3200.h>
 
 // display
+// https://code.google.com/p/u8glib/
 #include <U8glib.h>
 
 // wifi
@@ -33,6 +37,10 @@
 
 // progmem
 #include <avr/pgmspace.h>
+
+// timer
+// https://github.com/PaulStoffregen/TimerOne
+#include <TimerOne.h>
 
 
 // robot components
@@ -64,14 +72,19 @@ uint8_t batt_percent;
 // gyro_heading
 int16_t gyro_heading;
 
-// displaying
-uint8_t is_displaying=0;
-
 // top message
 char top_message[16];
 
-void callback() {
+
+void timerInterrupt() {
+
+  sei(); // for i2C
   
+  wheel.updateHeading(30000);
+  wheel.updateMotors();
+   
+  display.drawMain(gyro_heading, wheel.getAngle(), wheel.getSpeed() , batt_percent, dist[0], dist[1], dist[2], top_message );
+ 
 }
 
 void setup() {
@@ -98,18 +111,15 @@ void setup() {
 
   strcpy(top_message,"Connecting ...");
 
+  Timer1.initialize();
+  Timer1.attachInterrupt(timerInterrupt, 30000);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
-  unsigned int t0=micros();
-  
-  wheel.updateHeading();
-  wheel.updateMotors();
-
+ 
   switch(tick) {
-
 
     case 8: 
       batt_percent = battery.percent();
@@ -137,15 +147,8 @@ void loop() {
     case 23:
     case 43:
       gyro_heading = wheel.getGyroHeading();
-      // no break;
-
-    case 24:
-    case 44:
-      is_displaying = 1;
-      break;
-        
+      // no break;        
     
-
     default:
    
       switch (wireless.getCommand()) {
@@ -161,18 +164,9 @@ void loop() {
 
   }
 
-  // display
-  if (is_displaying) {
-    is_displaying = display.drawMain(gyro_heading, wheel.getAngle(), wheel.getSpeed() , batt_percent, dist[0], dist[1], dist[2], top_message );
-  }
-  
 
   tick++;
   if (tick>47) tick=0;
 
-  unsigned int t=micros()-t0;
-  if (t<20000) {
-    delayMicroseconds(20000-t);
-  }
-  
+   delay(20);
 }

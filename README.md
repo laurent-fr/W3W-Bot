@@ -8,6 +8,7 @@ To build the arduino firmware, you will need a few libraries :
  * https://code.google.com/p/u8glib/
  * https://github.com/adafruit/Adafruit_HMC5883_Unified
  * https://github.com/adafruit/Adafruit_Sensor
+ * https://github.com/PaulStoffregen/TimerOne
  
 The steps for programming the robot are :
 

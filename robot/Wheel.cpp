@@ -37,8 +37,7 @@ void Wheel::useIMU(IMU *imu) {
   _imu=imu;
 
    _gyro_heading = normalizeAngle( _imu->getCompassHeading() );
-   _delta_t1=micros();
-   delay(20);
+  
 }
 
 void Wheel::setHeading(float heading) {
@@ -81,15 +80,11 @@ float Wheel::getSpeed() {
   return _speed;
 }
 
-void Wheel::updateHeading() {
-  _delta_t=micros()-_delta_t1;
-  _delta_t1=micros();
-
-  Serial.println(_delta_t);
+void Wheel::updateHeading(uint16_t delta_t) {
 
   _compass_heading = normalizeAngle( _imu->getCompassHeading() );
   
-  _gyro_heading += _imu->getGyroSpeedZ()*_delta_t/1000000;
+  _gyro_heading += _imu->getGyroSpeedZ()*delta_t/1000000;
   _gyro_heading = normalizeAngle(_gyro_heading);
 
   _gyro_heading=0.99*_gyro_heading+0.01*_compass_heading;
